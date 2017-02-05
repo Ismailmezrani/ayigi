@@ -1,0 +1,3 @@
+ayigi_plateforme_homepage:
+  type: rest
+  resource: "AyigiPlateFormeBundle:AyigiPlateFormeManage"

@@ -1,0 +1,3 @@
+ayigi_etablissement_homepage:
+    path:     /
+    defaults: { _controller: AyigiEtablissementBundle:Etablissement:index }

@@ -1,0 +1,16 @@
+{% extends "::layout_admin.html.twig" %}
+
+{% block body %}
+
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        	<h1>Create a new country (destination country)</h1>
+          	<h2 class="page-header">Dashboard</h2>
+        {% block section1%}
+			<div class="well">
+			  <form action="#" method="post">
+			    {{ form_widget(form) }}
+			    <input type="submit" class="btn btn-success" />
+			  </form>
+			</div>
+		{% endblock %}
+{% endblock %}

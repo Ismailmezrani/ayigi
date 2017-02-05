@@ -1,0 +1,3 @@
+ayigi_plate_forme_homepage:
+    path:     /
+    defaults: { _controller: AyigiPlateFormeBundle:Default:index }

@@ -1,0 +1,33 @@
+{% extends 'layout_ayigi.html.twig' %}
+
+{% block contenu %}
+ <section class="title">
+        <div class="container">
+            <div class="row-fluid">
+                <div class="span6">
+                    <h1>Mettre à jour ses informations</h1>
+                </div>
+                <div class="span6">
+                    <ul class="breadcrumb pull-right">
+                        <li><a href="index.html">Home</a> <span class="divider">/</span></li>
+                        <li><a href="#">Client</a> <span class="divider">/</span></li>
+                        <li class="active">Create page</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- / .title -->    
+
+<section id="terms-use" class="container">
+    <h3>Introduction</h3>
+        
+        <div class="well">
+			  <form action="#" method="post">
+			    {{ form_widget(form) }}
+			    <input type="submit" class="btn btn-success" value="Mettre à jour" />
+			  </form>
+			</div>
+    </section>
+	
+{% endblock %}

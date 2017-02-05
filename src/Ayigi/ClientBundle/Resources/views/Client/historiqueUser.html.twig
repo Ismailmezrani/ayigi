@@ -1,0 +1,181 @@
+{% extends 'layout_ayigi.html.twig' %}
+
+{% block contenu %}
+
+<section class="title">
+        <div class="container">
+            <div class="row-fluid">
+                <div class="span6">
+                    <h1>Historique utilisateur</h1>
+                </div>
+                <div class="span6">
+                    <ul class="breadcrumb pull-right">
+                        <li><a href="index.html">Home</a> <span class="divider">/</span></li>
+                        <li><a href="#">Pages</a> <span class="divider">/</span></li>
+                        <li class="active">Terms of Use</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+</section>
+<!-- / .title --> 
+
+<section id="terms-use" class="container">
+{% if paiements is defined %}
+    {% if paiements is not empty %}
+        <section>
+            <h3 class="span5">Liste des transactions effectuées </h3>
+
+            <h4 class="span3 offset3" id="new-transaction">
+                <a href="{{ path('ayigi_client_paiement_user', {'idClient' : client.id })}} ">Nouvelle transaction</a>
+            </h4>
+            <hr>
+        </section>
+        
+        <div class="table-responsive" id="liste_paiement">
+
+            <table class="table table-striped">
+
+                <thead>
+
+                    <th>Date</th>
+                    <th>Service</th>
+                    <th>Etablissement</th>
+                    <th>Montant</th>
+                    <th>Beneficiaire</th>
+                    <th>Message</th>
+                    <th>Statut</th>
+                </thead>
+
+                <tbody>
+                {% for p in paiements %}
+                    <tr>
+                        <td> {{ p.datepaiement|date('d/m/Y') }} </td>
+                        <td> {{ p.service.nom }} </td>
+                        <td> {{ p.etablissements.nom }} </td>
+                        <td> {{ p.montant }} </td>
+                        <td> {{ p.nom }} <br/> {{ p.prenom }} </td>
+                        <td> {{ p.message }} </td>
+                        {% if p.etat %}
+                            <td> Paiement OK </td>
+                        {% else %}
+                            <td>
+                                <a href="{{ path('ayigi_client_reprise_paiement_user', {'idPaiement' : p.id })}} ">
+                                    Finaliser l'envoi ? 
+                                </a> 
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    {% endif %}
+{% endif %}
+
+</section>
+{% endblock %}
+
+
+{% block services %}
+    <!--Services-->
+    <section id="services">
+        <div class="container">
+            <div class="center gap">
+                <h3>What We Offer</h3>
+                <p class="lead">Look at some of the recent projects we have completed for our valuble clients</p>
+            </div>
+
+            <div class="row-fluid">
+                <div class="span4">
+                    <div class="media">
+                        <div class="pull-left">
+                            <i class="icon-globe icon-medium"></i>
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">Web Design</h4>
+                            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
+                        </div>
+                    </div>
+                </div>            
+
+                <div class="span4">
+                    <div class="media">
+                        <div class="pull-left">
+                            <i class="icon-thumbs-up-alt icon-medium"></i>
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">Graphic Design</h4>
+                            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
+                        </div>
+                    </div>
+                </div>            
+
+                <div class="span4">
+                    <div class="media">
+                        <div class="pull-left">
+                            <i class="icon-leaf icon-medium icon-rounded"></i>
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">Email Marketing</h4>
+                            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gap"></div>
+
+            <div class="row-fluid">
+                <div class="span4">
+                    <div class="media">
+                        <div class="pull-left">
+                            <i class="icon-shopping-cart icon-medium"></i>
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">Ecommerce Solution</h4>
+                            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
+                        </div>
+                    </div>
+                </div>            
+
+                <div class="span4">
+                    <div class="media">
+                        <div class="pull-left">
+                            <i class="icon-globe icon-medium"></i>
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">SEO &amp; Solution</h4>
+                            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
+                        </div>
+                    </div>
+                </div>            
+
+                <div class="span4">
+                    <div class="media">
+                        <div class="pull-left">
+                            <i class="icon-globe icon-medium"></i>
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">Bootstrap</h4>
+                            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!--/Services-->
+{% endblock %}
+
+{% block script %}
+    <script type = "text/javascript">
+        $(document).ready(function(){
+           
+           
+        });
+         
+    </script>
+{% endblock %}

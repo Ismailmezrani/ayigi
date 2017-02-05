@@ -1,0 +1,48 @@
+{% extends "::layout_admin.html.twig" %}
+
+{% block body %}
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Dashboard</h1>
+          
+
+          {% block section2 %}
+          <h2 class="sub-header">All services </h2>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>id</th>
+                  <th>Nom</th>
+                  <th>Description</th>
+                  <th>Pays</th>
+                  
+                  <th>Update</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for service in services %}
+                <tr>
+                  <td>{{ service.id }} </td>
+                  <td>{{ service.nom }} </td>
+                  <td>{{ service.description }} </td>
+                  <td>
+                    {% for e in service.etablissements %}
+                      <ol>{{ e.nom }}</ol>
+                    {% endfor %}
+                  </td>
+                  <td>
+                    <a href="{{path('ayigi_plate_forme_admin_update_service', {'id' : service.id })}} ">Update</a>
+                  </td>
+                  <td>
+                    <a href="{{path('ayigi_plate_forme_admin_delete_service', {'id' : service.id })}} ">Delete</a>
+                  </td>
+                </tr>
+              {% endfor %}
+               
+              </tbody>
+            </table>
+          </div>
+          {% endblock %}
+        </div>
+      {% endblock %}

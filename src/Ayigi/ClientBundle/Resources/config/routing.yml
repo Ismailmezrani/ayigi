@@ -1,0 +1,57 @@
+#login_check_client:
+#    path: /login_check
+#
+#logout:
+#    path: /logout
+#
+#ayigi_client_homepage:
+#    path:     /
+#    defaults: { _controller: AyigiClientBundle:Client:index }
+#
+#ayigi_client_liste_service:
+#    path:     /liste-service/
+#    defaults: { _controller: AyigiClientBundle:Client:listeService }
+#
+##---------------- Manage customer account ---------------------------------
+#
+#ayigi_client_historique_user:
+#    path:     /historique-de-mon-compte/{id}
+#    defaults: { _controller: AyigiClientBundle:Client:historiqueUser }
+#
+#
+#ayigi_client_choix_pays_etablissement:
+#    path:     /choix-pays-etablissement/
+#    defaults: { _controller: AyigiClientBundle:Client:choixPaysEtablissement }
+#
+#ayigi_client_choix_etablissement_service:
+#    path:     /choix-etablissement-service/
+#    defaults: { _controller: AyigiClientBundle:Client:choixEtablissementService }
+#
+#
+#ayigi_client_paiement_user:
+#    path:     /paiement-service/{idClient}
+#    defaults: { _controller: AyigiClientBundle:Client:paiementService }
+#
+#ayigi_client_finaliser_paiement_user_carte_bancaire:
+#    path:     /finaliser-paiement-carte-bancaire/{idPaiement}
+#    defaults: { _controller: AyigiClientBundle:Client:FinaliserPaiementServiceCarteBancaire }
+#
+#ayigi_client_validate_info_generales_user:
+#    path:     /validate-info-generales/
+#    defaults: { _controller: AyigiClientBundle:Client:validateInfoGeneralesPaiementService }
+#
+#ayigi_client_reprise_paiement_user:
+#    path:     /reprise-paiement-service/{idPaiement}
+#    defaults: { _controller: AyigiClientBundle:Client:reprisePaiementService }
+#
+#
+#ayigi_client_update_user:
+#    path:     /mise-a-jour-des-informations-du-compte/{id}
+#    defaults: { _controller: AyigiClientBundle:Client:updateUser }
+#
+#
+#ayigi_client_view_user:
+#    path:     /voir-le-detail-de-son-compte/{id}
+#    defaults: { _controller: AyigiClientBundle:Client:viewUser }
+#
+##---------------- End Manage customer account ------------------------------

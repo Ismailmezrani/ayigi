@@ -1,0 +1,88 @@
+# To get started with security, check out the documentation:
+# http://symfony.com/doc/current/security.html
+security:
+    encoders:
+        Ayigi\PlateFormeBundle\Entity\Administrateur: bcrypt
+        Ayigi\ClientBundle\Entity\Client: bcrypt
+        Ayigi\EtablissementBundle\Entity\Etablissement: bcrypt
+
+    role_hierarchy:
+        ROLE_PARTENAIRE: ROLE_PARTENAIRE
+        ROLE_CLIENT: ROLE_USER
+        ROLE_ADMIN: [ROLE_ADMIN, ROLE_SUPERVISEUR, ROLE_SERVICECLIENT]
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+    # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    
+    providers:
+        chain_provider:
+            chain:
+                providers: [admin_provider, client_provider, partenaire_provider]
+        admin_provider:
+            entity:
+                class: Ayigi\PlateFormeBundle\Entity\Administrateur
+                property: username
+        
+        client_provider:
+            entity:
+                class: Ayigi\ClientBundle\Entity\Client
+                property: username
+
+        partenaire_provider:
+            entity:
+                class: Ayigi\EtablissementBundle\Entity\Etablissement
+                property: username
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        plateforme_admin:
+            pattern:    ^/ayigi-admin/.*
+            anonymous:  ~
+            context: user
+            provider:  admin_provider
+            form_login:
+                login_path: admin_login
+                check_path: admin_login
+                default_target_path: /ayigi-admin/
+            logout:
+                path:   /ayigi-admin/logout
+                target: /ayigi-admin/
+
+        plateforme_client:
+            pattern:    ^/espace-client/.*
+            anonymous: ~
+            context: user
+            provider:  client_provider
+            form_login:
+                login_path: client_login
+                check_path: client_login
+            logout:
+                path:   /espace-client/logout
+                target: /espace-client/
+
+        plateforme_partenaire:
+            pattern:    ^/espace-partenaire/.*
+            anonymous: false
+            provider:  partenaire_provider
+            form_login:
+                login_path: partenaire_login
+                check_path: partenaire_login
+            logout:
+                path:   /espace-partenaire/logout
+                target: /espace-partenaire/
+
+            # activate different ways to authenticate
+
+            # http_basic: ~
+            # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+
+            # form_login: ~
+            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+    access_control:
+        - { path: ^/(espace-partenaire/login|espace-client/login|ayigi-admin/login|registration)$, roles: IS_AUTHENTICATED_ANONYMOUSLY}
+        - { path: ^/ayigi-admin, roles: ROLE_ADMIN}
+        - { path: ^/espace-client, roles: ROLE_CLIENT}
+        - { path: ^/espace-partenaire, roles: ROLE_PARTENAIRE}

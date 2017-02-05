@@ -1,0 +1,51 @@
+{% extends "::layout_admin.html.twig" %}
+
+{% block body %}
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Dashboard</h1>
+          
+
+          {% block section2 %}
+          <h2 class="sub-header">All plateforme users</h2>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>id</th>
+                  <th>Nom</th>
+                  <th>Prenom</th>
+                  <th>Rôle</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Login</th>
+                  <th>Last connexion</th>
+                  <th>Update</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for user in users %}
+                <tr>
+                  <td>{{ user.id }} </td>
+                  <td>{{ user.nom }} </td>
+                  <td>{{ user.prenom }} </td>
+                  <td>{{ user.profil }} </td>
+                  <td>{{ user.email }} </td>
+                  <td>{{ user.telephone }} </td>
+                  <td>{{ user.username }} </td>
+                  <td>{{ user.datederniereconnexion|date('d/m/Y') }} </td>
+                  <td>
+                    <a href="{{path('ayigi_plate_forme_admin_update_user', {'id' : user.id })}} ">Update</a>
+                  </td>
+                  <td>
+                    <a href="{{path('ayigi_plate_forme_admin_delete_user', {'id' : user.id })}} ">Delete</a>
+                  </td>
+                </tr>
+              {% endfor %}
+               
+              </tbody>
+            </table>
+          </div>
+          {% endblock %}
+        </div>
+      {% endblock %}

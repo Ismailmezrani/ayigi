@@ -1,0 +1,50 @@
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+
+admin:
+    resource: "@AyigiPlateFormeBundle/Controller/"
+    type:     annotation
+
+client:
+    resource: "@AyigiClientBundle/Controller/"
+    type:     annotation
+
+Etablissement:
+    resource: "@AyigiEtablissementBundle/Controller/"
+    type:     annotation
+#
+#ayigi_plateforme:
+#  resource: "@AyigiPlateFormeBundle/Resources/config/routing.yml"
+#  prefix: /ayigi/
+#
+#ayigi_plateforme_admin:
+#  resource: "@AyigiPlateFormeBundle/Resources/config/routing_admin.yml"
+#  prefix: /ayigi-admin/
+#
+#ayigi_etablissement:
+#  resource: "@AyigiEtablissementBundle/Resources/config/routing.yml"
+#  prefix: /etablissement/
+#
+#ayigi_client:
+#  resource: "@AyigiClientBundle/Resources/config/routing.yml"
+#  prefix: /espace-client/
+#
+#ayigi_client_create_compte:
+#  path:     /create-compte
+#  defaults: { _controller: AyigiClientBundle:Client:createCompte }
+#
+#login-client:
+#  path: /login-client
+#  defaults:
+#      _controller: AyigiClientBundle:Security:login
+#
+#login:
+#  path: /login
+#  defaults:
+#      _controller: AyigiPlateFormeBundle:Security:login
+#
+#login-partenaire:
+#  path: /login-partenaire
+#  defaults:
+#      _controller: AyigiEtablissementBundle:Security:login

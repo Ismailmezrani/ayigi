@@ -1,0 +1,44 @@
+{% extends "::layout_admin.html.twig" %}
+
+{% block body %}
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Dashboard</h1>
+          
+
+          {% block section2 %}
+          <h2 class="sub-header">All destination contries </h2>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>id</th>
+                  <th>Continent</th>
+                  <th>Nom du pays</th>
+                  <th>Code postal</th>
+                  
+                  <th>Update</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for country in countries %}
+                <tr>
+                  <td>{{ country.id }} </td>
+                  <td>{{ country.continent }} </td>
+                  <td>{{ country.nom }} </td>
+                  <td>{{ country.codepostal }} </td>
+                  <td>
+                    <a href="{{path('ayigi_plate_forme_admin_update_country', {'id' : country.id })}} ">Update</a>
+                  </td>
+                  <td>
+                    <a href="{{path('ayigi_plate_forme_admin_delete_country', {'id' : country.id })}} ">Delete</a>
+                  </td>
+                </tr>
+              {% endfor %}
+               
+              </tbody>
+            </table>
+          </div>
+          {% endblock %}
+        </div>
+      {% endblock %}

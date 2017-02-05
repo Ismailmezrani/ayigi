@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Ayigi administration</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" type="text/css" href="{{asset('bootstrap-3.3.7/dist/css/bootstrap.min.css')}}">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link rel="stylesheet" type="text/css" href="{{asset('bootstrap-3.3.7/dist/css/ie10viewport.css')}}">
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" type="text/css" href="{{asset('bootstrap-3.3.7/dist/css/dashboard.css')}}">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="{{asset('bootstrap-3.3.7/dist/js/ie-emulation.js')}}"></script><![endif]-->
+    <script src="{{asset('bootstrap-3.3.7/dist/js/ie-emulation.js')}}"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Ayigi Dashboard</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Connected : </a></li>
+            <li><a href="#"></a></li>
+            <li><a href="{{path('logout') }} ">Log-out</a></li>
+            <!--<li><a href="#">Help</a></li>-->
+          </ul>
+          <form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="Search...">
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+    {% block header %}
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="{{path('ayigi_plate_forme_admin_create_user')}} ">Create User</a></li>
+            <li class="active"><a href="{{path('ayigi_plate_forme_admin_create_country')}} ">Create Country</a></li>
+            <li class="active"><a href="{{path('ayigi_plate_forme_admin_create_etablissement')}} ">Create Etablissement</a></li>
+            <li class="active"><a href="{{path('ayigi_plate_forme_admin_create_service')}} ">Create Service</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="{{path('ayigi_plate_forme_admin_liste_client')}} ">Liste Clients</a></li>
+            <li><a href="{{path('ayigi_plate_forme_admin_liste_user')}} ">Liste Users</a></li>
+            <li><a href="{{path('ayigi_plate_forme_admin_liste_country')}} ">Liste Countries</a></li>
+            <li><a href="{{path('ayigi_plate_forme_admin_liste_etablissement')}} ">Liste Etablissements</a></li>
+            <li><a href="{{path('ayigi_plate_forme_admin_liste_service')}} ">Liste Services</a></li>
+            <li><a href="">Another nav item</a></li>
+            <li><a href="">More navigation</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="">Nav item again</a></li>
+            <li><a href="">One more nav</a></li>
+            <li><a href="">Another nav item</a></li>
+          </ul>
+        </div>
+      </div>
+    {% endblock %}
+
+      {% block body %}
+        
+        {% block section1%}
+          
+        {% endblock %}
+
+        {% block section2 %}
+        
+        {% endblock %}
+        
+      {% endblock %}
+      
+    
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="{{asset('bootstrap-3.3.7/dist/js/bootstrap.min.js')}}"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="../../assets/js/vendor/holder.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>

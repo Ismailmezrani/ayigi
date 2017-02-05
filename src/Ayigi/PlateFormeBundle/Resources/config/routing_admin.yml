@@ -1,0 +1,110 @@
+login_check:
+    path: /login_check
+
+logout:
+    path: /logout
+
+ayigi_plate_forme_admin_homepage:
+    path:     /
+    defaults: { _controller: AyigiPlateFormeBundle:Admin:index }
+
+# --------------- Manage plate forme users with rôle : Service client, superviseur, admin, super admin ---------
+ayigi_plate_forme_admin_create_user:
+    path:     /create-user/
+    defaults: { _controller: AyigiPlateFormeBundle:Admin:createUser }
+
+ayigi_plate_forme_admin_update_user:
+    path:     /update-user/{id}
+    defaults: { _controller: AyigiPlateFormeBundle:Admin:updateUser }
+
+ayigi_plate_forme_admin_delete_user:
+    path:     /delete-user/{id}
+    defaults: { _controller: AyigiPlateFormeBundle:Admin:deleteUser }
+
+ayigi_plate_forme_admin_liste_user:
+    path:     /liste-user/
+    defaults: { _controller: AyigiPlateFormeBundle:Admin:listeUser }
+
+#ayigi_plate_forme_admin_view_user:
+#    path:     /view-user/{id}
+#    defaults: { _controller: AyigiPlateFormeBundle:Admin:viewUser }
+
+
+# ---------------------------- End manage users -----------------------------------------
+
+# ---------------------------- Manage country -------------------------------------------
+
+ayigi_plate_forme_admin_create_country:
+    path:     /create-country/
+    defaults: { _controller: AyigiPlateFormeBundle:Admin:createCountry }
+
+ayigi_plate_forme_admin_update_country:
+    path:     /update-country/{id}
+    defaults: { _controller: AyigiPlateFormeBundle:Admin:updateCountry }
+
+ayigi_plate_forme_admin_delete_country:
+    path:     /delete-country/{id}
+    defaults: { _controller: AyigiPlateFormeBundle:Admin:deleteCountry }
+
+ayigi_plate_forme_admin_liste_country:
+    path:     /liste-country/
+    defaults: { _controller: AyigiPlateFormeBundle:Admin:listeCountry }
+
+# ---------------------------- End manage country ---------------------------------
+
+# ---------------------------- Manage etablissement -------------------------------------------
+
+ayigi_plate_forme_admin_create_etablissement:
+    path:     /create-etablissement/
+    defaults: { _controller: AyigiPlateFormeBundle:Admin:createEtablissement }
+
+ayigi_plate_forme_admin_update_etablissement:
+    path:     /update-etablissement/{id}
+    defaults: { _controller: AyigiPlateFormeBundle:Admin:updateEtablissement }
+
+ayigi_plate_forme_admin_delete_etablissement:
+    path:     /delete-etablissement/{id}
+    defaults: { _controller: AyigiPlateFormeBundle:Admin:deleteEtablissement }
+
+ayigi_plate_forme_admin_liste_etablissement:
+    path:     /liste-etablissement/
+    defaults: { _controller: AyigiPlateFormeBundle:Admin:listeEtablissement }
+
+# ---------------------------- End manage etablissement ---------------------------------
+
+
+
+# ---------------------------- Manage service -------------------------------------------
+
+ayigi_plate_forme_admin_create_service:
+    path:     /create-service/
+    defaults: { _controller: AyigiPlateFormeBundle:Admin:createService }
+
+ayigi_plate_forme_admin_update_service:
+    path:     /update-service/{id}
+    defaults: { _controller: AyigiPlateFormeBundle:Admin:updateService }
+
+ayigi_plate_forme_admin_delete_service:
+    path:     /delete-service/{id}
+    defaults: { _controller: AyigiPlateFormeBundle:Admin:deleteService }
+
+ayigi_plate_forme_admin_liste_service:
+    path:     /liste-service/
+    defaults: { _controller: AyigiPlateFormeBundle:Admin:listeService }
+
+# ---------------------------- End manage service ---------------------------------
+
+
+# ---------------------------- manage Client ---------------------------------
+
+ayigi_plate_forme_admin_liste_client:
+    path:     /liste-client/
+    defaults: { _controller: AyigiPlateFormeBundle:Admin:listeClient }
+
+ayigi_plate_forme_admin_update_client:
+    path:     /update-client/{id}
+    defaults: { _controller: AyigiPlateFormeBundle:Admin:updateClient }
+
+ayigi_plate_forme_admin_delete_client:
+    path:     /delete-client/{id}
+    defaults: { _controller: AyigiPlateFormeBundle:Admin:deleteClient }

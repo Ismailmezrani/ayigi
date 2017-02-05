@@ -1,0 +1,54 @@
+{% extends "::layout_admin.html.twig" %}
+
+{% block body %}
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Dashboard</h1>
+          
+
+          {% block section2 %}
+          <h2 class="sub-header">All plateforme partenaires</h2>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>id</th>
+                  <th>Nom etablissement</th>
+                  <th>Pays</th>
+                  <th>Adresse</th>
+                  <th>Ville</th>
+                  <th>code postal</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Creation</th>
+                  <th>Update</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% if etablissements is not empty %}
+                {% for etablissement in etablissements %}
+                  <tr>
+                    <td>{{ etablissement.id }} </td>
+                    <td>{{ etablissement.nom }} </td>
+                    <td>#### </td>
+                    <td>{{ etablissement.adresse }} </td>
+                    <td>{{ etablissement.ville }} </td>
+                    <td>{{ etablissement.codepostal }} </td>
+                    <td>{{ etablissement.email }} </td>
+                    <td>{{ etablissement.telephone }} </td>
+                    <td>{{ etablissement.datecreation|date('d/m/Y') }} </td>
+                    <td>
+                      <a href="{{path('ayigi_plate_forme_admin_update_etablissement', {'id' : etablissement.id })}} ">Update</a>
+                    </td>
+                    <td>
+                      <a href="{{path('ayigi_plate_forme_admin_delete_etablissement', {'id' : etablissement.id })}} ">Delete</a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              {% endif %}
+              </tbody>
+            </table>
+          </div>
+          {% endblock %}
+        </div>
+      {% endblock %}
