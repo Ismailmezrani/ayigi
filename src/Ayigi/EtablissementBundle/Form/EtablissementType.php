@@ -36,7 +36,7 @@ class EtablissementType extends AbstractType
         ->add('ville')
         ->add('codepostal')
         ->add('username')
-        ->add('password')
+        ->add('plainPassword')
         ;
     }
     

@@ -31,10 +31,10 @@
                   <td>{{ client.email }} </td>
                   <td>{{ client.telephone }} </td>
                   <td>
-                    <a href="{{path('ayigi_plate_forme_admin_update_client', {'id' : client.id })}} ">Update</a>
+                    <a href="{{path('admin_update_client', {'id' : client.id })}} ">Update</a>
                   </td>
                   <td>
-                    <a href="{{path('ayigi_plate_forme_admin_delete_client', {'id' : client.id })}} ">Delete</a>
+                    <a href="{{path('admin_delete_client', {'id' : client.id })}} ">Delete</a>
                   </td>
                 </tr>
               {% endfor %}

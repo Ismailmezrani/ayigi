@@ -28,10 +28,10 @@
                   <td>{{ country.nom }} </td>
                   <td>{{ country.codepostal }} </td>
                   <td>
-                    <a href="{{path('ayigi_plate_forme_admin_update_country', {'id' : country.id })}} ">Update</a>
+                    <a href="{{path('admin_update_country', {'id' : country.id })}} ">Update</a>
                   </td>
                   <td>
-                    <a href="{{path('ayigi_plate_forme_admin_delete_country', {'id' : country.id })}} ">Delete</a>
+                    <a href="{{path('admin_delete_country', {'id' : country.id })}} ">Delete</a>
                   </td>
                 </tr>
               {% endfor %}

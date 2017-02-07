@@ -16,28 +16,24 @@ class AdministrateurType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('nom')
-                ->add('prenom')
-                ->add('datedenaissance')
-                ->add('email')
-                ->add('telephone')
-                ->add('datederniereconnexion')
-                ->add('username')
-                ->add('plainPassword')
-                ->add('profil', ChoiceType::class, array(
-                       
-                    'choices'   =>array(
-                    'ROLE_SERVICECLIENT' =>  'Service client',
-                    'ROLE_SUPERVISEUR'  =>  'Superviseur',
-                    'ROLE_ADMIN'     =>  'Admin',
-                    'ROLE_SUPER_ADMIN'     =>  'Super Admin',
-                    ), '
-                    required' => true,
-                ))
-             
-
-                ;
+            ->add('prenom')
+            ->add('datedenaissance')
+            ->add('email')
+            ->add('telephone')
+            ->add('datederniereconnexion')
+            ->add('username')
+            ->add('plainPassword')
+            ->add('roles', ChoiceType::class, array(
+                'choices' => array(
+                    'Service client' => 'ROLE_CLIENT',
+                    'Superviseur' => 'ROLE_SUPERVISEUR',
+                    'Admin' => 'ROLE_ADMIN',
+                    'Super Admin' => 'ROLE_SUPER_ADMIN',
+                ),
+                'placeholder' => 'choice'
+            ));
     }
-    
+
     /**
      * {@inheritdoc}
      */

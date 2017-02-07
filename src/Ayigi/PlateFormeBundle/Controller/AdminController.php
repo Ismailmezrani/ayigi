@@ -54,15 +54,11 @@ class AdminController extends Controller
 
         $form = $this->createForm(AdministrateurType::class, $adminUser);
 
-
         if($form->handleRequest($request) && $form->isValid())
         {
-            $adminUser= $form->getData();
-
-            $factory = $this->container->get('security.encoder_factory');
-            $encoder = $factory->getEncoder($adminUser);
-            $adminUser->encodePassword($encoder);
-
+            $factory = $this->get('security.password_encoder');
+            $adminUser->setPassword($factory->encodePassword($adminUser, $adminUser->getPlainPassword()));
+            $adminUser->setRoles((array)$adminUser->getRoles());
             $em->persist($adminUser);
             $em->flush();
 
@@ -267,6 +263,9 @@ class AdminController extends Controller
 
         if($form->handleRequest($request) && $form->isValid())
         {
+            $factory = $this->get('security.password_encoder');
+            $etablissement->setPassword($factory->encodePassword($etablissement, $etablissement->getPlainPassword()));
+            $etablissement->setRoles((array)$etablissement->getRoles());
             $em->persist($etablissement);
             $em->flush();
 
@@ -437,7 +436,7 @@ class AdminController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $services = $em->getRepository('AyigiPlateFormeBundle:Service')->findAll();
-
+        dump($services);
         if ($services)
         {
             return $this->render('AyigiPlateFormeBundle:Admin:listeService.html.twig', array(

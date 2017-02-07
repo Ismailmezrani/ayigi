@@ -73,7 +73,7 @@ class Client extends AbstractUser implements AdvancedUserInterface
 
     public function __construct()
     {
-        $this->roles = array("ROLE_CLIENT");
+        $this->roles = array("ROLE_ADMIN");
     }
 
     /**
@@ -268,8 +268,6 @@ class Client extends AbstractUser implements AdvancedUserInterface
     {
         return $this->roles;
     }
-
-
 
     /**
      * Checks whether the user's account has expired.

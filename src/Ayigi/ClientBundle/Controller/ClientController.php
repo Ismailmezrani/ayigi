@@ -30,7 +30,6 @@ class ClientController extends Controller
      */
     public function indexAction()
     {
-
         $client = $this->getUser();
         if (!$client) {
             $this->redirectToRoute("client_login");
@@ -50,11 +49,7 @@ class ClientController extends Controller
     public function updateUserAction(Client $client, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-
         $form = $this-$this->createForm(ClientType::class, $client);
-
-
-
         if ( $form->handleRequest($request)&& $form->isValid()) {
             $em->flush();
 
@@ -131,7 +126,7 @@ class ClientController extends Controller
     public function historiqueUserAction(Client $client)
     {
         $em = $this->getDoctrine()->getManager();
-        dump($client);die;
+
         $listePaiements = new PaiementDone();
         $paiement = new PaiementDone();
 

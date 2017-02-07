@@ -32,10 +32,10 @@
                     {% endfor %}
                   </td>
                   <td>
-                    <a href="{{path('ayigi_plate_forme_admin_update_service', {'id' : service.id })}} ">Update</a>
+                    <a href="{{path('admin_update_service', {'id' : service.id })}} ">Update</a>
                   </td>
                   <td>
-                    <a href="{{path('ayigi_plate_forme_admin_delete_service', {'id' : service.id })}} ">Delete</a>
+                    <a href="{{path('admin_delete_service', {'id' : service.id })}} ">Delete</a>
                   </td>
                 </tr>
               {% endfor %}

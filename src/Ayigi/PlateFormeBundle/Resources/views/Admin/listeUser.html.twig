@@ -35,10 +35,10 @@
                   <td>{{ user.username }} </td>
                   <td>{{ user.datederniereconnexion|date('d/m/Y') }} </td>
                   <td>
-                    <a href="{{path('ayigi_plate_forme_admin_update_user', {'id' : user.id })}} ">Update</a>
+                    <a href="{{path('admin_update_user', {'id' : user.id })}} ">Update</a>
                   </td>
                   <td>
-                    <a href="{{path('ayigi_plate_forme_admin_delete_user', {'id' : user.id })}} ">Delete</a>
+                    <a href="{{path('admin_delete_user', {'id' : user.id })}} ">Delete</a>
                   </td>
                 </tr>
               {% endfor %}

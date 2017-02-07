@@ -30,7 +30,10 @@
                   <tr>
                     <td>{{ etablissement.id }} </td>
                     <td>{{ etablissement.nom }} </td>
-                    <td>#### </td>
+                    <td>{% for pays in etablissement.paysDestination  %}
+                        {{ pays.nom }} <br>
+                      {% endfor %}
+                  </td>
                     <td>{{ etablissement.adresse }} </td>
                     <td>{{ etablissement.ville }} </td>
                     <td>{{ etablissement.codepostal }} </td>
@@ -38,10 +41,10 @@
                     <td>{{ etablissement.telephone }} </td>
                     <td>{{ etablissement.datecreation|date('d/m/Y') }} </td>
                     <td>
-                      <a href="{{path('ayigi_plate_forme_admin_update_etablissement', {'id' : etablissement.id })}} ">Update</a>
+                      <a href="{{path('admin_update_etablissement', {'id' : etablissement.id })}} ">Update</a>
                     </td>
                     <td>
-                      <a href="{{path('ayigi_plate_forme_admin_delete_etablissement', {'id' : etablissement.id })}} ">Delete</a>
+                      <a href="{{path('admin_delete_etablissement', {'id' : etablissement.id })}} ">Delete</a>
                     </td>
                   </tr>
                 {% endfor %}
