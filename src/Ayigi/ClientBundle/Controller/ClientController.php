@@ -35,7 +35,7 @@ class ClientController extends Controller
             $this->redirectToRoute("client_login");
         }
         return $this->redirectToRoute('client_historique_user', array(
-            'client' => $client,
+            'client' => $client->getId(),
         ));
     }
 
@@ -144,7 +144,7 @@ class ClientController extends Controller
                 ));
             } else {
                 return $this->redirect($this->generateUrl('client_paiement_user', array(
-                    'idClient' => $client->getId(),
+                    'client' => $client->getId(),
                 )));
             }
 
@@ -157,7 +157,7 @@ class ClientController extends Controller
     }
 
     /**
-     * @Route("/paiement-service/{idClient}", name="client_paiement_user")
+     * @Route("/paiement-service/{client}", name="client_paiement_user")
      * @Method({"GET", "POST"})
      * @param Request $request
      * @param Client $client
@@ -194,7 +194,7 @@ class ClientController extends Controller
                 $em->flush();
 
                 return $this->redirect($this->generateUrl('client_finaliser_paiement_user_carte_bancaire', array(
-                    'idPaiement' => $paiement->getId(),
+                    'paiement' => $paiement->getId(),
                 )));
             }
 
@@ -208,7 +208,7 @@ class ClientController extends Controller
     }
 
     /**
-     * @Route("/finaliser-paiement-carte-bancaire/{idPaiement}", name="client_finaliser_paiement_user_carte_bancaire")
+     * @Route("/finaliser-paiement-carte-bancaire/{paiement}", name="client_finaliser_paiement_user_carte_bancaire")
      * @Method({"GET", "POST"})
      * @param Request $request
      * @param PaiementDone $paiement

@@ -44,10 +44,10 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </a>
-                <a id="logo" class="pull-left" href="index.html"></a>
+                <a id="logo" class="pull-left" href="{{ path ('client_homepage') }}"></a>
                 <div class="nav-collapse collapse pull-right">
                     <ul class="nav">
-                        <li class="active"><a href="index.html">Home</a></li>
+                        <li class="active"><a href="{{ path ('client_homepage') }}">Home</a></li>
                         <li><a href="about-us.html">Qui sommes nous ?</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Comment ça marche<i class="icon-angle-down"></i></a>
@@ -72,9 +72,9 @@
                                         Connecté : {{ client.nom }} <i class="icon-angle-down"></i>
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="{{path('ayigi_client_historique_user', {'id' : client.id })}} ">Historique</a></li>
-                                        <li><a href="{{path('ayigi_client_update_user', {'id' : client.id })}} ">Modification du compte</a></li>
-                                        <li><a href="{{path('ayigi_client_liste_service')}} ">Liste des services</a></li>
+                                        <li><a href="{{path('client_historique_user', {'client' : client.id })}} ">Historique</a></li>
+                                        <li><a href="{{path('client_update_compte', {'id' : client.id })}} ">Modification du compte</a></li>
+                                        <li><a href="{{path('client_liste_service')}} ">Liste des services</a></li>
                                         <li><a href="faq.html">Aide en ligne</a></li>
                                         <li><a href="{{path('client_logout')}} ">Déconnexion</a></li>
                                     </ul>
@@ -381,7 +381,7 @@
     <div class="container">
         <div class="row-fluid">
             <div class="span5 cp">
-                &copy; 2013 <a target="_blank" href="http://shapebootstrap.net/" title="Free Twitter Bootstrap WordPress Themes and HTML templates">ShapeBootstrap</a>. All Rights Reserved.
+                {#&copy; 2013 <a target="_blank" href="http://shapebootstrap.net/" title="Free Twitter Bootstrap WordPress Themes and HTML templates">ShapeBootstrap</a>. All Rights Reserved.#}
             </div>
             <!--/Copyright-->
 

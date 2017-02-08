@@ -55,7 +55,7 @@
       <div  id="myBar"></div>
     </div>
 
-    <form action="{{ path('ayigi_client_paiement_user', {'idClient': client.id } )}} " method="post" class="span12">
+    <form action="{{ path('client_paiement_user', {'client': client.id } )}} " method="post" class="span12">
 
     <div class="row-fluid" id="infos_generales">
 
@@ -189,7 +189,7 @@
                 var id = $('.' + selecteurparent + 'class').val();
             
                 $.ajax({
-                    url: "{{ path('ayigi_client_choix_pays_etablissement') }}",
+                    url: "{{ path('client_etablisssement_choice') }}",
                     type: "POST",
                     data: "select="+ selecteur + "& id="+ id,
                     dataType: "json",
@@ -214,7 +214,7 @@
                 var id = $('.' + selecteurparent + 'class').val();
             
                 $.ajax({
-                    url: "{{ path('ayigi_client_choix_etablissement_service') }}",
+                    url: "{{ path('client_choice_service_etablisssement') }}",
                     type: "POST",
                     data: "select="+ selecteur + "& id="+ id,
                     dataType: "json",
@@ -283,7 +283,7 @@
               
                 $.ajax({
                     type: "POST",
-                    url: "{{ path('ayigi_client_validate_info_generales_user')}}",
+                    url: "{{ path('client_validate_info_generales_user')}}",
                     data: DATA,
                     cache: false,
                     success: function(response){

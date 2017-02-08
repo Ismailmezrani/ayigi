@@ -27,7 +27,7 @@
             <h3 class="span5">Liste des transactions effectuées </h3>
 
             <h4 class="span3 offset3" id="new-transaction">
-                <a href="{{ path('ayigi_client_paiement_user', {'idClient' : client.id })}} ">Nouvelle transaction</a>
+                <a href="{{ path('client_paiement_user', {'client' : client.id })}} ">Nouvelle transaction</a>
             </h4>
             <hr>
         </section>
@@ -60,7 +60,7 @@
                             <td> Paiement OK </td>
                         {% else %}
                             <td>
-                                <a href="{{ path('ayigi_client_reprise_paiement_user', {'idPaiement' : p.id })}} ">
+                                <a href="{{ path('client_reprise_paiement_user', {'idPaiement' : p.id })}} ">
                                     Finaliser l'envoi ? 
                                 </a> 
                             </td>

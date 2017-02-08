@@ -73,7 +73,7 @@ class Client extends AbstractUser implements AdvancedUserInterface
 
     public function __construct()
     {
-        $this->roles = array("ROLE_ADMIN");
+        $this->roles = array("ROLE_CLIENT");
     }
 
     /**

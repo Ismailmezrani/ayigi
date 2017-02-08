@@ -200,7 +200,7 @@
                 var id = $('.' + selecteurparent + 'class').val();
             
                 $.ajax({
-                    url: "{{ path('ayigi_client_choix_pays_etablissement') }}",
+                    url: "{{ path('client_etablisssement_choice') }}",
                     type: "POST",
                     data: "select="+ selecteur + "& id="+ id,
                     dataType: "json",
@@ -223,7 +223,7 @@
                 var id = $('.' + selecteurparent + 'class').val();
             
                 $.ajax({
-                    url: "{{ path('ayigi_client_choix_etablissement_service') }}",
+                    url: "{{ path('client_etablisssement_choice') }}",
                     type: "POST",
                     data: "select="+ selecteur + "& id="+ id,
                     dataType: "json",

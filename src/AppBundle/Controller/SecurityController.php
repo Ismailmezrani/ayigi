@@ -26,9 +26,8 @@ class SecurityController extends Controller
      */
     public function loginAction(Request $request)
 	{
-
         $route = "client_homepage";
-        $template = "default/index.html.twig";
+        $template = "::layout_ayigi.html.twig";
         if ($request->get('_route') === 'admin_login') {
             $route = "admin_homepage";
             $template = "AyigiPlateFormeBundle:Security:login.html.twig";
@@ -38,13 +37,13 @@ class SecurityController extends Controller
             $template = "EtablissementBundle:Security:login.html.twig";
         }
 
+
         // Si l'utilisateur est déjà connecté, on le redirige vers la page d'acceuil
         if ($this->getUser()) {
             return $this->redirectToRoute($route);
         }
 
         $authenticationUtils = $this->get('security.authentication_utils');
-
 	    return $this->render($template, array(
 	      'last_username' => $authenticationUtils->getLastUsername(),
 	      'error'         => $authenticationUtils->getLastAuthenticationError(),

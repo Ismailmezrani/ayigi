@@ -1,1 +1,6 @@
 {% extends 'layout_ayigi.html.twig' %}
+{% block error %}
+ {% if error %}
+     <div class="alert alert-danger">{{ error.message }}</div>
+ {% endif %}
+{% endblock %}
