@@ -1,6 +1,8 @@
 <?php
 
 namespace Ayigi\PlateFormeBundle\Repository;
+use Ayigi\EtablissementBundle\Entity\Etablissement;
+use Ayigi\PlateFormeBundle\Entity\Service;
 
 /**
  * TarifServiceRepository
@@ -10,4 +12,17 @@ namespace Ayigi\PlateFormeBundle\Repository;
  */
 class TarifServiceRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function getFaisMontant(Etablissement $etablissement, Service $service)
+    {
+
+        $q = $this->createQueryBuilder('ts')
+            ->select('ts.montant')
+            ->where('ts.etablissement = :etablissement')
+            ->andWhere('ts.service = :service')
+            ->setParameter('etablissement', $etablissement)
+            ->setParameter('service', $service);
+
+        return $q->getQuery()->getSingleResult();
+    }
 }

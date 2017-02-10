@@ -16,10 +16,9 @@ class EtablissementRepository extends EntityRepository
 	{
 		$qb = $this->createQueryBuilder('e')
 					->leftJoin('e.paysDestination', 'p')
-    				->addSelect('p')      
 	            	->where('p.id = :idPays')
 	            	->setParameter('idPays', $idPays);
 	 
-			return $qb->getQuery()->getArrayResult();
+			return $qb->getQuery()->getResult();
 	}
 }

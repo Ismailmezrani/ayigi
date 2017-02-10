@@ -14,10 +14,9 @@ class ServiceRepository extends \Doctrine\ORM\EntityRepository
 	{
 		$qb = $this->createQueryBuilder('s')
 					->leftJoin('s.etablissements', 'e')
-    				->addSelect('e')      
 	            	->where('e.id = :idEtablissement')
 	            	->setParameter('idEtablissement', $idEtablissement);
 	 
-			return $qb->getQuery()->getArrayResult();
+			return $qb->getQuery()->getResult();
 	}
 }

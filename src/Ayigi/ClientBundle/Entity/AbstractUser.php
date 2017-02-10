@@ -13,7 +13,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\MappedSuperclass
  * @ORM\HasLifecycleCallbacks
  *
- * @UniqueEntity(fields = "username", message="Email déjà enregistré")
+ * @UniqueEntity(fields = "username", message="username déjà enregistré")
  */
 abstract class AbstractUser implements UserInterface
 {

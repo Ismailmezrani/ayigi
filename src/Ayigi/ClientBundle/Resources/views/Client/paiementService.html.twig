@@ -10,7 +10,7 @@
                 </div>
                 <div class="span6">
                     <ul class="breadcrumb pull-right">
-                        <li><a href="index.html">Home</a> <span class="divider">/</span></li>
+                        <li><a href="{{ path('client_homepage') }}">Home</a> <span class="divider">/</span></li>
                         <li><a href="#">Pages</a> <span class="divider">/</span></li>
                         <li class="active">nouveau paiement</li>
                     </ul>
@@ -55,8 +55,8 @@
       <div  id="myBar"></div>
     </div>
 
-    <form action="{{ path('client_paiement_user', {'client': client.id } )}} " method="post" class="span12">
-
+        {#<form action="{{ path('client_paiement_user', {'client': client.id } )}} " method="post" class="span12">#}
+    {{ form_start(form) }}
     <div class="row-fluid" id="infos_generales">
 
         <div class="span3 onglet_destination">
@@ -117,16 +117,18 @@
     <div id="info_paiement" style="display: none">
         <div class="span12">
             <div class="span3">
-                <div class="form-group">
-                    <label>Choix devise</label>
-                    <select name="choixdevise" id="choixdevise">
-                            <option>------------</option>
-                        {% for tauxdevise in listedesdevises %}
-                           <option value="{{ tauxdevise.taux }} "> {{ tauxdevise.nom }} </option>
-                        {% endfor %}
-                    </select>
-                    
-                </div>
+                {{ form_label (form.devise, "choix devise") }}
+                {{ form_widget(form.devise, {'attr' : {'class' : 'choixdevise'}}) }}
+                {#<div class="form-group">#}
+                    {#<label>Choix devise</label>#}
+                    {#<select name="choixdevise" id="choixdevise">#}
+                            {#<option>------------</option>#}
+                        {#{% for tauxdevise in listedesdevises %}#}
+                            {#<option value="{{ tauxdevise.taux }} "> {{ tauxdevise.nom }} </option>#}
+                        {#{% endfor %}#}
+                    {#</select>#}
+
+                {#</div>#}
             </div>
 
             <div class="span3">
@@ -136,7 +138,7 @@
                 </div>
 
                 <div>
-                    <p>Frais : ----- </p>
+                    <span>Frais :<p class="frais"> ----- </p></span>
 
                 </div>
             </div>
@@ -145,8 +147,9 @@
                 <div class="form-group">
                     {{ form_label (form.montantrecu, "Montant à recevoir") }}
                     {{ form_widget(form.montantrecu, {'attr' : {'class' : 'montantrecuclass'}}) }}
-                    <div id="paysReception">
-                    </div>
+                    <div id="paysReception"> </div>
+                    <div id="devisPayeRecpetion"> </div>
+                    <div id="tauxEX"> </div>
                 </div>
             </div>
 
@@ -159,7 +162,8 @@
             <button type="submit" class="btn btn-primary" id="send" style="display: none;">ENVOYER</button>
             <button type="submit" class="btn btn-primary" id="save" style="display: none;">ENREGISTRER</button>
         </div>
-    </form>
+    {{ form_end(form) }}
+    {#</form>#}
         
 </section>
 {% endblock %}
@@ -168,21 +172,42 @@
 {% block script %}
     <script type = "text/javascript">
         $(document).ready(function(){
-
-            $(".paysclass").change(function() {
-
-                //alert('change pays');
-                changepays('etablissement','pays');
-                move();
-                $("input").prop('disabled', false);
-                $("select").prop('disabled', false);
+            var $pays = $('.paysclass');
+            $pays.change(function() {
+                var $form = $(this).closest('form');
+                var data = {};
+                data[$pays.attr('name')] = $pays.val();
+                $.ajax({
+                    url : $form.attr('action'),
+                    type: $form.attr('method'),
+                    data : data,
+                    success: function(html) {
+                        $('.etablissementclass').replaceWith(
+                                $(html).find('.etablissementclass')
+                        );
+                        addEventListenerToEtablissements();
+                    }
+                });
             });
 
-            $(".etablissementclass").change(function() {
-                //alert('change etab');
-                changeEtablissement('service','etablissement');
-                move();
-            });
+            function addEventListenerToEtablissements () {
+                $('.etablissementclass').on('change', function () {
+
+                    var $form = $(this).closest('form');
+                    var data = {};
+                    data[$(this).attr('name')] = $(this).val();
+                    $.ajax({
+                        url: $form.attr('action'),
+                        type: $form.attr('method'),
+                        data: data,
+                        success: function (html) {
+                            $('.serviceclass').replaceWith(
+                                    $(html).find('.serviceclass')
+                            );
+                        }
+                    });
+                });
+            }
             
             function changepays(selecteur,selecteurparent)
             {  
@@ -263,7 +288,23 @@
             });
 
             //Validation des infos générales
-            $('#next_step_2').click(function(){ 
+            $('#next_step_2').click(function(){
+                var etablissement = $('.etablissementclass').val();
+                var service = $('.serviceclass').val();
+
+                var pays = $(".paysclass").val();
+
+                var message = $('.messageclass').val();
+                var nomDestinataire = $('.nomclass').val();
+                var prenomDestinataire = $('.prenomclass').val();
+                var telephoneDestinataire = $('.telephoneclass').val();
+                $.ajax({
+                    type: "POST",
+                    url: "{{ path('client_frais_service')}}/"+etablissement+"/"+service,
+                    success: function(response){
+                        $('.frais').html(response.montant);
+                    }
+                });
                 
                 event.preventDefault();
 
@@ -271,34 +312,59 @@
                 $('#info_paiement').fadeIn();
                 $('#send').fadeIn();
 
-                var pays = $(".paysclass").val();
-                var etablissement = $('.etablissementclass').val();
-                var service = $('.serviceclass').val();
-                var message = $('.messageclass').val();
-                var nomDestinataire = $('.nomclass').val();
-                var prenomDestinataire = $('.prenomclass').val();
-                var telephoneDestinataire = $('.telephoneclass').val();
 
+
+                console.log($('#choixdevise:selected').text());
+                console.log($('#choixdevise').text());
                 var DATA = 'pays=' + pays + "& etablissement="+ etablissement + "& service="+ service + "& message="+ message + "& nomDestinataire="+ nomDestinataire + "& prenomDestinataire=" + prenomDestinataire + "& telephoneDestinataire="+ telephoneDestinataire ;
               
                 $.ajax({
                     type: "POST",
                     url: "{{ path('client_validate_info_generales_user')}}",
                     data: DATA,
-                    cache: false,
                     success: function(response){
+                        console.log(response);
                         //alert(response);
-                        $('#paysReception').html(response);
+                        $('#paysReception').html(response.name);
+                        $('#devisPayeRecpetion').html(response.devise);
                     }
                 });    
                 return false;
             });
+
+            $('.choixdevise').on('change', function () {
+                var etablissement = $('.etablissementclass').val();
+                var service = $('.serviceclass').val();
+
+                var pays = $(".paysclass").val();
+
+                var message = $('.messageclass').val();
+                var nomDestinataire = $('.nomclass').val();
+                var prenomDestinataire = $('.prenomclass').val();
+                var telephoneDestinataire = $('.telephoneclass').val();
+                var devise = $(".choixdevise option:selected").text();
+                var DATA = 'fromDevise='+devise+'&pays=' + pays + "& etablissement="+ etablissement + "& service="+ service + "& message="+ message + "& nomDestinataire="+ nomDestinataire + "& prenomDestinataire=" + prenomDestinataire + "& telephoneDestinataire="+ telephoneDestinataire ;
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ path('client_validate_info_generales_user')}}",
+                    data: DATA,
+                    cache: false,
+                    success: function(response){
+                        console.log(response);
+                        $('#tauxEX').html('taux d\'echange = <span class=\'tauxValue\'>'+response.tauxEchange+'</span>');
+                    }
+                });
+
+            });
+
             //Fin Validation des infos générales
 
             $( ".montantclass" ).keyup(function() {
-              
-              var taux = $('#choixdevise').val();
-              $('.montantrecuclass').val($('.montantclass').val() * taux);
+
+              var $tauxValue= $('.tauxValue').html();
+                var fraisService = $('.frais').html();
+              $('.montantrecuclass').val(($('.montantclass').val() * $tauxValue) + fraisService);
             });
 
         });

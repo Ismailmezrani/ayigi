@@ -2,6 +2,9 @@
 
 namespace Ayigi\ClientBundle\Controller;
 
+use Ayigi\PlateFormeBundle\Entity\PaysDestination;
+use Ayigi\PlateFormeBundle\Entity\Service;
+use Ayigi\PlateFormeBundle\Entity\TarifService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -23,6 +26,7 @@ use Ayigi\EtablissementBundle\Entity\Etablissement;
  */
 class ClientController extends Controller
 {
+    private $apiUrl = 'http://free.currencyconverterapi.com/api/v3/convert?q=[params]&compact=y';
     /**
      * @Route("/", name="client_homepage" )
      * @Method({"GET", "POST"})
@@ -34,9 +38,24 @@ class ClientController extends Controller
         if (!$client) {
             $this->redirectToRoute("client_login");
         }
+//        $form = $this - $this->createForm(ClientType::class, $client);
         return $this->redirectToRoute('client_historique_user', array(
             'client' => $client->getId(),
         ));
+    }
+
+    /**
+     * @Route("/fraisService/{etablissement}/{service}", name="client_frais_service" )
+     * @Method({"GET", "POST"})
+     * @param Etablissement $etablissement
+     * @param Service $service
+     * @return JsonResponse
+     */
+    public function getFraisForService(Etablissement $etablissement = null, Service $service = null)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $montantFrais = $em->getRepository(TarifService::class)->getFaisMontant($etablissement, $service);
+        return new JsonResponse($montantFrais);
     }
 
     /**
@@ -49,8 +68,8 @@ class ClientController extends Controller
     public function updateUserAction(Client $client, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $form = $this-$this->createForm(ClientType::class, $client);
-        if ( $form->handleRequest($request)&& $form->isValid()) {
+        $form = $this - $this->createForm(ClientType::class, $client);
+        if ($form->handleRequest($request) && $form->isValid()) {
             $em->flush();
 
             return $this->redirect($this->generateUrl('client_homepage'));
@@ -100,7 +119,6 @@ class ClientController extends Controller
     public function choixEtablissementServiceAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $etablissements = new Etablissement();
 
         if ($request->isXmlHttpRequest()) // pour vérifier la présence d'une requete Ajax
         {
@@ -128,7 +146,6 @@ class ClientController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $listePaiements = new PaiementDone();
-        $paiement = new PaiementDone();
 
         $allPays = $em->getRepository('AyigiPlateFormeBundle:PaysDestination')->findAll();
         $allServices = $em->getRepository('AyigiPlateFormeBundle:Service')->findAll();
@@ -172,39 +189,34 @@ class ClientController extends Controller
 
         $montantPayer = null;
 
-        $form = $this->get('form.factory')->create(PaiementDoneType::class, $paiement);
+        $form = $this->createForm(PaiementDoneType::class, $paiement, ['em' => $em]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            //$devise = $request->request->get('choixdevise');
 
-        if ($client != null) {
-            if ($request->getMethod() == 'POST') {
-                //$devise = $request->request->get('choixdevise');
+            $paiement = $form->getData();
 
-                $form->handleRequest($request);
+            $paiement->setClient($client);
+            //$paiement->SetDevise($devise);
 
-                $paiement = $form->getData();
-
-                $paiement->setClient($client);
-                //$paiement->SetDevise($devise);
-
-                $montantPayer = $paiement->getMontant();
-                if ($montantPayer != null) {
-                    $paiement->SetEtat(true);
-                }
-
-                $em->persist($paiement);
-                $em->flush();
-
-                return $this->redirect($this->generateUrl('client_finaliser_paiement_user_carte_bancaire', array(
-                    'paiement' => $paiement->getId(),
-                )));
+            $montantPayer = $paiement->getMontant();
+            if ($montantPayer != null) {
+                $paiement->SetEtat(true);
             }
 
-            return $this->render('AyigiClientBundle:Client:paiementService.html.twig', array(
-                'client' => $client,
-                'form' => $form->createView(),
-                'listedesdevises' => $listedesdevises,
-            ));
+            $em->persist($paiement);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('client_finaliser_paiement_user_carte_bancaire', array(
+                'paiement' => $paiement->getId(),
+            )));
         }
-        return new Response('NON NON');
+
+        return $this->render('AyigiClientBundle:Client:paiementService.html.twig', array(
+            'client' => $client,
+            'form' => $form->createView(),
+            'listedesdevises' => $listedesdevises,
+        ));
     }
 
     /**
@@ -221,7 +233,7 @@ class ClientController extends Controller
 
         $client = $paiement->getClient();
 
-        $form = $this->createForm(PaiementDoneType::class, $paiement);
+        $form = $this->createForm(PaiementDoneType::class, $paiement, ['em' =>$em]);
 
         if ($form->handleRequest($request) && $form->isValid()) {
 
@@ -231,7 +243,7 @@ class ClientController extends Controller
             $em->flush();
 
             return $this->redirect($this->generateUrl('client_historique_user', array(
-                'id' => $paiement->getClient()->getId(),
+                'client' => $paiement->getClient()->getId(),
             )));
         }
 
@@ -258,13 +270,14 @@ class ClientController extends Controller
         if ($request->isXmlHttpRequest()) // pour vérifier la présence d'une requete Ajax
         {
             $idPays = $request->request->get('pays');
+            $fromDevise = $request->request->get('fromDevise', null);
             $idEtablissement = $request->request->get('etablissement');
             $idService = $request->request->get('service');
             $message = $request->request->get('message');
             $nomDestinataire = $request->request->get('nomDestinataire');
             $prenomDestinataire = $request->request->get('prenomDestinataire');
             $telephoneDestinataire = $request->request->get('telephoneDestinataire');
-
+            /** @var PaysDestination $pays */
             $pays = $em->getRepository('AyigiPlateFormeBundle:PaysDestination')->find($idPays);
             $service = $em->getRepository('AyigiPlateFormeBundle:Service')->find($idService);
 
@@ -295,19 +308,24 @@ class ClientController extends Controller
             $em->persist($paiement);
             $em->flush();
 
-            $data = $pays->getNom();
-
+            $data['name'] = $pays->getNom();
+            $data['devise'] = $pays->getDevise()->getNom();
+            if ($fromDevise !== null) {
+                $tauxEx = $this->convertFromTo($fromDevise, $pays->getDevise()->getNom());
+                $data['tauxEchange'] = array_values(json_decode($tauxEx, true))[0]['val'];
+                dump($data);
+            }
             //$data = json_encode($etablissements);
-            return new Response($data);
+            return new JsonResponse($data);
 
         }
-        return new Response("Erreur de validation des informations générales");
+        return new JsonResponse("Erreur de validation des informations générales");
     }
 
     //fin validate infos générales
 
     /**
-     * @Route("/reprise-paiement-service/{idPaiement}", name="client_reprise_paiement_user")
+     * @Route("/reprise-paiement-service/{paiement}", name="client_reprise_paiement_user")
      * @Method({"GET", "POST"})
      * @param Request $request
      * @param PaiementDone $paiement
@@ -322,7 +340,7 @@ class ClientController extends Controller
 
         $montantPayer = null;
 
-        $form = $this->get('form.factory')->create(PaiementDoneType::class, $paiement);
+        $form = $this->createForm(PaiementDoneType::class, $paiement, ['em' => $em]);
 
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
@@ -338,7 +356,7 @@ class ClientController extends Controller
             $em->flush();
 
             return $this->redirect($this->generateUrl('client_historique_user', array(
-                'id' => $paiement->getClient()->getId(),
+                'client' => $paiement->getClient()->getId(),
             )));
         }
 
@@ -385,5 +403,27 @@ class ClientController extends Controller
         } else {
             return $this->redirect($this->generateUrl('client_homepage'));
         }
+    }
+
+    /**
+     * @param string $from
+     * @param string $to
+     * @return mixed
+     */
+    private function convertFromTo(string $from = 'EUR', string $to = 'EUR')
+    {
+        dump($from);
+        $queryParameter = $from . '_' . $to;
+        $url = str_replace('[params]', $queryParameter, $this->apiUrl);
+        dump($url);
+        $ch = curl_init();
+        $timeout = 5;
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+        $data = curl_exec($ch);
+        curl_close($ch);
+        return $data;
+
     }
 }

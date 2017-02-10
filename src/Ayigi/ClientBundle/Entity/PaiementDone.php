@@ -59,7 +59,7 @@ class PaiementDone
      *
      * @ORM\Column(name="montant", type="integer", nullable=true)
      */
-    private $montant;
+    private     $montant;
 
     /**
      * @var string

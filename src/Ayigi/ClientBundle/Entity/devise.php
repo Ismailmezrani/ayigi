@@ -29,9 +29,15 @@ class devise
     private $nom;
 
     /**
+     * @var string
+     * @ORM\Column(name="full_name", type="string", length=255, nullable=true)
+     */
+    private $fullName = null;
+
+    /**
      * @var float
      *
-     * @ORM\Column(name="taux", type="float")
+     * @ORM\Column(name="taux", type="float", nullable=true)
      */
     private $taux;
 
@@ -71,27 +77,35 @@ class devise
     }
 
     /**
-     * Set taux
-     *
-     * @param float $taux
-     *
-     * @return devise
+     * @return string
      */
-    public function setTaux($taux)
+    public function getFullName()
     {
-        $this->taux = $taux;
-
-        return $this;
+        return $this->fullName;
     }
 
     /**
-     * Get taux
-     *
+     * @param string $fullName
+     */
+    public function setFullName($fullName)
+    {
+        $this->fullName = $fullName;
+    }
+
+    /**
      * @return float
      */
     public function getTaux()
     {
         return $this->taux;
+    }
+
+    /**
+     * @param float $taux
+     */
+    public function setTaux($taux)
+    {
+        $this->taux = $taux;
     }
 }
 

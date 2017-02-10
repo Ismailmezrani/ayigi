@@ -2,6 +2,7 @@
 
 namespace Ayigi\PlateFormeBundle\Entity;
 
+use Ayigi\ClientBundle\Entity\devise;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -38,9 +39,16 @@ class PaysDestination
     /**
      * @var int
      *
-     * @ORM\Column(name="codepostal", type="integer")
+     * @ORM\Column(name="codepostal", type="integer", nullable=true)
      */
     private $codepostal;
+
+    /**
+     * @var devise
+     * @ORM\ManyToOne(targetEntity="Ayigi\ClientBundle\Entity\devise")
+     * @ORM\JoinColumn(name="devis_id", referencedColumnName="id", nullable=false)
+     */
+    private $devise;
 
 
     /**
@@ -123,6 +131,22 @@ class PaysDestination
     public function getCodepostal()
     {
         return $this->codepostal;
+    }
+
+    /**
+     * @return devise
+     */
+    public function getDevise()
+    {
+        return $this->devise;
+    }
+
+    /**
+     * @param devise $devise
+     */
+    public function setDevise($devise)
+    {
+        $this->devise = $devise;
     }
 }
 
