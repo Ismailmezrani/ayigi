@@ -172,6 +172,7 @@
 {% block script %}
     <script type = "text/javascript">
         $(document).ready(function(){
+
             var $pays = $('.paysclass');
             $pays.change(function() {
                 var $form = $(this).closest('form');
@@ -312,10 +313,6 @@
                 $('#info_paiement').fadeIn();
                 $('#send').fadeIn();
 
-
-
-                console.log($('#choixdevise:selected').text());
-                console.log($('#choixdevise').text());
                 var DATA = 'pays=' + pays + "& etablissement="+ etablissement + "& service="+ service + "& message="+ message + "& nomDestinataire="+ nomDestinataire + "& prenomDestinataire=" + prenomDestinataire + "& telephoneDestinataire="+ telephoneDestinataire ;
               
                 $.ajax({

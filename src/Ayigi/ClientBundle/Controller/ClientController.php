@@ -59,7 +59,7 @@ class ClientController extends Controller
     }
 
     /**
-     * @Route("/update-compte/{id}", name="client_update_compte")
+     * @Route("/update-compte/{client}", name="client_update_compte")
      * @Method({"GET", "POST"})
      * @param Client $client
      * @param Request $request
@@ -68,7 +68,8 @@ class ClientController extends Controller
     public function updateUserAction(Client $client, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $form = $this - $this->createForm(ClientType::class, $client);
+        $form = $this->createForm(ClientType::class, $client);
+
         if ($form->handleRequest($request) && $form->isValid()) {
             $em->flush();
 
@@ -412,10 +413,8 @@ class ClientController extends Controller
      */
     private function convertFromTo(string $from = 'EUR', string $to = 'EUR')
     {
-        dump($from);
         $queryParameter = $from . '_' . $to;
         $url = str_replace('[params]', $queryParameter, $this->apiUrl);
-        dump($url);
         $ch = curl_init();
         $timeout = 5;
         curl_setopt($ch, CURLOPT_URL, $url);
